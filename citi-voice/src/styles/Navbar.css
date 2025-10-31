@@ -1,0 +1,94 @@
+body{
+  direction: rtl;
+  font-family: "Cairo", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.navbar{
+  direction: rtl;
+  background: linear-gradient(90deg,#00897b, #26a69a);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 27px 40px;
+  background-color: #1e88e5;
+  color: white;
+  font-family: "Tajawal", sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+}
+.navbar-logo a{
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+.navbar-links{
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+.navbar-links a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}   
+.navbar-links a:hover{
+    color: #c5e1ff;
+    border-bottom: 2px solid #d1be83;
+    padding-bottom: 3px;
+}
+.navbar-links .active{
+    border-bottom: 2px solid #fff;
+    padding-bottom: 3px;
+}
+.navbar-buttons{
+  display: flex;
+  gap: 15px;
+}
+
+.btn-login,
+.btn-register{
+  margin: 20px;
+  background: white;
+  color: #00897b;
+  padding: 8px 18px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.btn-login:hover{
+  background-color: #c5e1ff;
+  color: #0d47a1;
+}
+.btn-register:hover{
+  background-color: #e0f2f1;
+}
+.btn-register{
+  background: #004d40;
+  color: white;
+}
+.btn-register:hover{
+  background-color: #26a69a; 
+}
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .navbar-links {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .navbar-logo{
+    width: 100%;
+    margin-top: 10px;
+  }
+}

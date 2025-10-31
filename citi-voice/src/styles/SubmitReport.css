@@ -1,0 +1,73 @@
+body{
+    font-family: 'cairo', sans-serif;
+    background-color: #f7f9fa;
+    margin: 0;
+    padding: 0;
+}
+.SubmitReport{
+    max-width: 600px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+}
+.SubmitReport h2{
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+.submit-report-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.submit-report-form input[type="text"],
+.submit-report-form textarea,
+.submit-report-form select {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: 0.3s;
+}
+.submit-report-form input:focus,
+.submit-report-form textarea:focus,
+.submit-report-form select:focus {
+    border-color: #00796b;
+    box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
+}
+.submit-report-form textarea{
+    resize: vertical;
+    min-height: 100px;
+}
+.submit-report-form button{
+    background-color: #00796b;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.submit-report-form button:hover{
+    background-color: #004d40;
+}
+.submit-report-form input[type="file"] {
+    padding: 5px ;
+}
+@media (max-width: 480px) {
+    .SubmitReport {
+        margin: 20px;
+        padding: 20px 15px;
+    }
+    .SubmitReport h2 {
+        font-size: 1.5em;
+    }
+}
+
+
