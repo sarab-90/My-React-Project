@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css"
+
 
 export default function UserType({setUser}) {
     const [userType, setUserType] = useState("");
@@ -13,11 +15,12 @@ export default function UserType({setUser}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         if(!userType || !name){
             alert("الرجاء إدخال الاسم وتحديد الدور");
             return;
         }
-        if (!userType === "مبلغ" && !nationalID){
+        if (userType === "مبلغ" && !nationalID){
             alert("الرجاء إدخال الرقم الوطني للمبلغ.")
             return;
         };
@@ -26,7 +29,7 @@ export default function UserType({setUser}) {
             return;
         };
 
-        const setUser = {
+        const UserData = {
             type: userType,
             name,
             nationalID,
@@ -35,58 +38,76 @@ export default function UserType({setUser}) {
         };
 
         // لربطه بالبلاغ لاحقا يحفظ في 
-        localStorage.setItem("user", JSON.stringify(userData));
-        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(UserData));
+        setUser(UserData);
 
         if(userType ==="مبلغ") navigate("/submit");
         else if ( userType ==="مقترح") navigate("/suggestion");
-        else navigate("/home");
+        else navigate("/Home");
     };
 
     return(
         <div className="UserType">
             <h2>حدد دورك وسجل بياناتك</h2>
+
             <form onSubmit={handleSubmit} className="user-type-form">
-                <input
-                    type="text"
-                    placeholder="الاسم الكامل"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-                {userType === "مبلغ" && (
+                <div>
+                    <label>الاسم الكامل</label>
                     <input
                         type="text"
-                        placeholder="الرقم الوطني"
-                        value={nationalID}
-                        onChange={(e) => setnationalID(e.target.value)}
+                        placeholder="الاسم الكامل"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         required
                     />
+                </div>
+                {userType === "مبلغ" && (
+                    <div>
+                        <label>الرقم الوطني</label>
+                        <input
+                            type="text"
+                            placeholder=" أدخل الرقم الوطني"
+                            value={nationalID}
+                            onChange={(e) => setnationalID(e.target.value)}
+                            required
+                        />
+                    </div>
                 )};
 
-                <input
-                    type="email"
-                    placeholder="البريد الإلكتروني"
-                    value={email}   
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="رقم الهاتف"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                />
+                <div>
+                    <label>البريد الإلكتروني</label>
+                    <input
+                        type="email"
+                        placeholder="example@email.com"
+                        value={email}   
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
 
-                <select
-                    value={userType}
-                    onChange={(e) => setUserType(e.target.value)}
-                    required
-                >
-                    <option value="">اختر دورك</option>
-                    <option value="مبلغ">مبلغ</option>
-                    <option value="مقترح">مقترح</option>
-                    <option value="زائر">زائر</option>
-                </select>
+                <div>
+                    <label>رقم الهاتف</label>
+                    <input
+                        type="text"
+                        placeholder="07xxxxxxxx"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                    />
+                </div>
+
+                <div>
+                    <label>الدور</label>
+                    <select
+                        value={userType}
+                        onChange={(e) => setUserType(e.target.value)}
+                        required
+                    >
+                        <option value="">اختر دورك</option>
+                        <option value="مبلغ">مبلغ</option>
+                        <option value="مقترح">مقترح</option>
+                        <option value="زائر">زائر</option>
+                    </select>
+                </div>
+
                 <button type="submit">متابعة</button>
             </form>
         </div>
