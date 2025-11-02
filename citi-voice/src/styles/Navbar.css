@@ -10,35 +10,36 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 27px 40px;
-  background-color: #1e88e5;
-  color: white;
+  padding: 1.5rem 2.5rem;
+  color: #fff;
   font-family: "Tajawal", sans-serif;
   position: sticky;
   top: 0;
   z-index: 1000;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
 }
 .navbar-logo a{
   text-decoration: none;
-  color: white;
-  font-size: 24px;
+  color: #fff;
+  font-size: 2.5rem;
   font-weight: bold;
 }
 .navbar-links{
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
 }
 .navbar-links a{
-    color: white;
+    color: #fff;
     text-decoration: none;
     font-weight: bold;
-    transition: 0.3s;
+    transition: 0.3s, border-bottom 0.3s;
 }   
-.navbar-links a:hover{
+.navbar-links a:hover,
+.navbar-links a:focus{
     color: #c5e1ff;
     border-bottom: 2px solid #d1be83;
     padding-bottom: 3px;
@@ -85,10 +86,14 @@ body{
   .navbar-links {
     flex-direction: column;
     width: 100%;
+    gap: 1rem;
+    text-align: center;
     margin-top: 10px;
   }
   .navbar-logo{
     width: 100%;
+    text-align: center;
+    margin-bottom: 0.75rem;
     margin-top: 10px;
   }
 }

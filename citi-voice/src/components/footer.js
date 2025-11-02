@@ -1,8 +1,7 @@
 import React from 'react';
 import '../styles/footer.css';
 import { Link } from 'react-router-dom';
-import{ Facebook, Twitter, YouTube, Instagram } from '@mui/icons-material';
-import {fafacebook, fatwitter, fayoutube, fainstagram} from 'react-icons/fa';
+import {FaFacebook, FaLinkedinIn, FaYoutube, FaInstagram} from 'react-icons/fa';
 
 export default function Footer() {
     return (
@@ -16,10 +15,10 @@ export default function Footer() {
             <div className='footer-social'>
                 <h3>تابعنا على</h3>
                 <div className='social-icons'>
-                    <a href='#' ><fafacebook/></a>
-                    <a href='#' ><fatwitter/></a>
-                    <a href='#' >youtube</a>
-                    <a href='#' >instagram</a>
+                    <a href='#' ><FaFacebook/></a>
+                    <a href='#' ><FaLinkedinIn/></a>
+                    <a href='#' ><FaYoutube/></a>
+                    <a href='#' ><FaInstagram/></a>
                 </div>
             </div>
 

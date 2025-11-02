@@ -15,23 +15,22 @@ import Suggestions from './pages/Suggestions';
 import Voting from './pages/Voting';
 import Contact from './pages/contact';  
 import UserType from './pages/UserType';
-import { Phone } from '@mui/icons-material';
 
 
 function App() {
   //حالة المستخدم التجريبية
-  const[user, setUser] = React.useState({name:"sarab", type:"مبلغ", Phone:"077xxxxxxx"});
+  const[user, setUser] = React.useState({name:"sarab", type:"مبلغ", phone:"077xxxxxxx"});
   //حالة البلاغات التجريبية
   const [reports, setReports] = React.useState([]);
   const [suggestions, setSuggestions] = React.useState([]);
 
   //دالة لإضافة بلاغ جديد
   const addReport = (Report) => {
-    setReports ([...reports,{...Report,id: Data.now(), status: 'قيد الالانتظار'}]);
+    setReports ([...reports,{...Report,id: Date.now(), status: 'قيد الالانتظار'}]);
   };
     //اضافة اقتراح جديد
     const addSuggestion = (suggestion) => {
-      setSuggestions ([...suggestions,{...suggestion, id: Data.now() }]);
+      setSuggestions ([...suggestions,{...suggestion, id: Date.now() }]);
     };
 
     //دالة لتحديث حالة البلاغ
@@ -54,7 +53,7 @@ function App() {
           <Route path='/voting' element={<Voting reports={reports} suggestions={Suggestions}/>}></Route>
           {/* <Route path='/report/:id' Component={ReportDetails}></Route> */}
           <Route path='/contact' element={<Contact user={user}/>}></Route>
-          <Route path='/UserType' element={<UserType user={user}/>}></Route>
+          <Route path='/UserType' element={<UserType user={user} setUser={setUser}/>}></Route>
         </Routes>
       
       <Footer/>

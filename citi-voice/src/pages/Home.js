@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect ,useState } from "react";
 import {Link} from 'react-router-dom';
 import '../styles/Home.css';
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -6,28 +6,29 @@ import "bootstrap/dist/css/bootstrap.min.css"
 
 export default function Home({reports}) {
   const images =[
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsdnnuIVV_zUY4yOTHKWoH3fyCd8xbVmxVImsMOa8853FNmo6aMAiHu-a0KeV3DHWV0C0&usqp=CAU",
-    "https://www.just.edu.jo/Units_and_offices/Offices/IRO/PublishingImages/Pages/6b737254f37de82f9ee30fa9782a22cf.jpg",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRITebd_cW8oMhDne5R5LdjITX6EhFZFw_DmQiBILle_eubSi9rytuagyglXhCje_4Wzwk&usqp=CAU",
     "https://www.altar7al.com/wp-content/uploads/2023/07/4-4-750x430.jpg",
-  ]
+    "https://www.petra.gov.jo/upload/1697801377383.jpg",
+    "https://www.hala.jo/wp-content/uploads/2021/02/%D8%B5%D9%88%D8%B1-%D8%B9%D8%A7%D9%85%D8%A9-%D8%A7%D8%B1%D8%A8%D8%AF-4-1736x1157-1.jpg",
+  ];
+  const [current,setcurrent] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setcurrent(prev => (prev + 1 ) % images.length);
+    },4000);
+    return () => clearInterval(timer)
+  },[images.length]);
+
   return (
     <div className="home-container">
-      <div className="jor-img">
-        {images.map((img, i) => (
-          <div key={i} className={`carousel-item ${i === 0 ? "active" : ""}`}>
-            <img src={img} className="block" alt={`slide ${i + 1}`} style={{maxHeight:"500px", objectFit:"cover"}}/>
-
-          </div>
-        ))}
+      <div className="jor-img" style={{backgroundImage:`url(${images[current]})`,}}>
       </div>
       <section className="home-section">
         <div>
           <h1>صوتي مسموع</h1>
           <p>منصتك لرفع البلاغات والمقترحات لتحسين الخدمات العامة بكل سهولة وشفافية.</p>
           <div className="home-buttons">
-            <Link to='/SubmitReport' className="btn report">قدم شكوى</Link>
-            <Link to='/suggestion' className="btn suggestion">قدم اقتراح</Link>
+            <Link to='/UserType' className="btn report">قدم بلاغ</Link>
+            <Link to='/UserType' className="btn suggestion">قدم اقتراح</Link>
           </div>
         </div>
       </section>

@@ -11,7 +11,6 @@ export default function ReportsPages({reports = [], deleteReport}){
     const completedReports = reports.filter((r) => r.status === "منفذ").length;
     return(
         <div className="container">
-        //احصائيات البلاغات 
         <div className="row text-center mb-4">
             <div className="col-md-3 mb-2">
                 <div className="card bg-light">

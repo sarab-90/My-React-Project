@@ -16,7 +16,7 @@ export default function Navbar() {
         {/* <li><Link to="/SubmitReport"></Link></li> */}
         <li><NavLink to="/about">من نحن</NavLink></li>
         <li><NavLink to="/contact">تواصل معنا</NavLink></li>
-        <li><NavLink to="/UserType">المستخدم</NavLink></li>
+        <li><NavLink to="/UserType"> تسجيل المستخدم</NavLink></li>
       </ul>
 
       {/* <div className='navbar-buttons'>

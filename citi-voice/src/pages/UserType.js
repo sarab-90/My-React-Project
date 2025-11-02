@@ -2,9 +2,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
+import '../styles/UserType.css'
+ 
 
-
-export default function UserType({setUser}) {
+export default function UserType({user,setUser}) {
     const [userType, setUserType] = useState("");
     const [name, setName] = useState("");
     const [nationalID, setnationalID] = useState("");
@@ -12,6 +13,9 @@ export default function UserType({setUser}) {
     const [phone, setPhone] = useState("");
 
     const navigate = useNavigate();
+
+    console.log('setuser is:', setUser)
+    console.log('typ set:', typeof setUser);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,27 +27,34 @@ export default function UserType({setUser}) {
         if (userType === "مبلغ" && !nationalID){
             alert("الرجاء إدخال الرقم الوطني للمبلغ.")
             return;
-        };
+        }
         if (!email && !phone){
             alert("يجب إدخال البريد الإلكتروني أو رقم الهاتف على الأقل.")
             return;
-        };
+        }
 
         const UserData = {
             type: userType,
             name,
-            nationalID,
+            nationalID:userType ==="مبلغ" ? nationalID : "" ,
             email,
             phone
         };
 
         // لربطه بالبلاغ لاحقا يحفظ في 
         localStorage.setItem("user", JSON.stringify(UserData));
+        console.log("typeof setUser:", typeof setUser)
         setUser(UserData);
 
-        if(userType ==="مبلغ") navigate("/submit");
-        else if ( userType ==="مقترح") navigate("/suggestion");
-        else navigate("/Home");
+        if(userType ==="مبلغ"){ 
+            navigate("/SubmitReport")
+        }
+        else if ( userType ==="مقترح"){
+             navigate("/suggestions");
+        }
+        else{
+             navigate("/Home");
+        }
     };
 
     return(
@@ -51,6 +62,19 @@ export default function UserType({setUser}) {
             <h2>حدد دورك وسجل بياناتك</h2>
 
             <form onSubmit={handleSubmit} className="user-type-form">
+                <div>
+                    <label>الدور</label>
+                    <select
+                        value={userType}
+                        onChange={(e) => setUserType(e.target.value)}
+                        required
+                    >
+                        <option value="">اختر دورك</option>
+                        <option value="مبلغ">مبلغ</option>
+                        <option value="مقترح">مقترح</option>
+                        <option value="زائر">زائر</option>
+                    </select>
+                </div>
                 <div>
                     <label>الاسم الكامل</label>
                     <input
@@ -93,22 +117,9 @@ export default function UserType({setUser}) {
                         onChange={(e) => setPhone(e.target.value)}
                     />
                 </div>
+                
 
-                <div>
-                    <label>الدور</label>
-                    <select
-                        value={userType}
-                        onChange={(e) => setUserType(e.target.value)}
-                        required
-                    >
-                        <option value="">اختر دورك</option>
-                        <option value="مبلغ">مبلغ</option>
-                        <option value="مقترح">مقترح</option>
-                        <option value="زائر">زائر</option>
-                    </select>
-                </div>
-
-                <button type="submit">متابعة</button>
+                <button type='submit'>متابعة</button>
             </form>
         </div>
     )

@@ -48,10 +48,10 @@ export default  function SubmitReport({addReport, user}){
             return;
         }   
         // تحقق من رقم وطني او هاتف حسب نوع مستخدم
-        if (user?.type === "مبلغ" && !nationalID){
-            alert("يرجى إدخال الرقم الوطني.");
-            return;
-        }
+        // if (user?.type === "مبلغ" && !nationalID){
+        //     alert("يرجى إدخال الرقم الوطني.");
+        //     return;
+        // }
         if (user?.type === "مقترح" && !phone){
             alert("يرجى إدخال رقم الهاتف");
             return;
@@ -89,10 +89,36 @@ export default  function SubmitReport({addReport, user}){
 
     return(
         <div className="SubmitReport">
-            <h2>إرسال بلاغ أو الاقتراح</h2>
+            <h2>إرسال بلاغ  </h2>
             <form onSubmit={handleSubmit} className="submit-report-form">
+                {user?.type === "مبلغ" && (
+                    <div>
+                        {/* <label>الرقم الوطني</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="الرقم الوطني"
+                            value={nationalID}
+                            onChange={(e) => setnationalID(e.target.value)}
+                            required
+                        /> */}
+                    </div>
+                )}
+                {user?.type === "مقترح" && (
+                    <div>
+                        <label>رقم الهاتف</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="رقم الهاتف"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            required
+                        />
+                    </div>
+                )}
                 <div>
-                    <label>عنوان البلاغ أو الاقتراح</label>
+                    <label>عنوان البلاغ  </label>
                     <input
                         type="text"
                         className="form-control"
@@ -102,7 +128,6 @@ export default  function SubmitReport({addReport, user}){
                         required
                     />
                 </div>
-
                 <div>
                     <label>نوع البلاغ</label>
                     <select
@@ -147,32 +172,7 @@ export default  function SubmitReport({addReport, user}){
                     </div>
                 )}
 
-                {user?.type === "مبلغ" && (
-                    <div>
-                        <label>الرقم الوطني</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="الرقم الوطني"
-                            value={nationalID}
-                            onChange={(e) => setnationalID(e.target.value)}
-                            required
-                        />
-                    </div>
-                )}
-                {user?.type === "مقترح" && (
-                    <div>
-                        <label>رقم الهاتف</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="رقم الهاتف"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            required
-                        />
-                    </div>
-                )}
+                
                 <div>
                     <label className="label=img">إرفاق صورة أو فيديو</label>
                     <input
