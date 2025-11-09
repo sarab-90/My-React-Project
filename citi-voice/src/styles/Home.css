@@ -5,6 +5,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-color: #fff;
+  position: relative;
 }
 .home-container {
   direction: rtl;
@@ -14,27 +15,29 @@
 }
 
 .home-section {
+  border-radius: 20px;
+  background-color: rgba(0,0,0,0.6);
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: (rgba(0, 0, 0, 0.5));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 100px 20px;
-  color: #fff;
-
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+  text-align: center;
+  padding: 40px 20px;
+  color: #ffffff;
+  z-index: 2;
 }
 .home-section h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-}
-.home-section p {
   font-size: 2rem;
   margin-bottom: 20px;
-  padding: 20px;
+  font-weight: bold;
+}
+.home-section p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  padding: 0 10px;
+  font-weight: bold;
 }
 .home-buttons .btn {
   display: inline-block;
@@ -43,18 +46,13 @@
   border-radius: 30px;
   text-decoration: none;
   font-weight: bold;
+  background-color: #e0e5e7;
+  color: #00897b;
+  transition: background-color .3s, color .3s;
 }
-.btn.report {
-  background-color: #fff;
-  color: #1e88e5;
-}
-.btn.suggestion {
-  background-color: #fff;
-  border: 2px solid #fff;
-  color: #1e88e5;
-}
-.btn:hover {
-  opacity: 0.9;
+.home-buttons .btn:hover{
+  background-color: #00897b;
+  color: #fff;
 }
 
 /* نبذة */
@@ -90,6 +88,14 @@
   font-size: 1.5rem;
   margin-bottom: 15px;
   color: #333;
+}
+.step a{
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Tajawal", sans-serif;
+
+
 }
 @media(max-width:768px){
   .steps{

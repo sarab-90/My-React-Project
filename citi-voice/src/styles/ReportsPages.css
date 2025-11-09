@@ -23,7 +23,7 @@
     margin-top: 30px;
 }
 .report-card{
-    background: #ffffff;
+    background: #e6e4e4;
     border: 1px solid #ddd;
     border-radius: 15px;
     padding: 20px;
@@ -46,7 +46,7 @@
     padding: 20px;
 }
 .report-title{
-    color: #0d6efd;
+    color: #d2d3d5;
     font-size: 1.5rem;
     margin-bottom: 10px;
 }

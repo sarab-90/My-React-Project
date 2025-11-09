@@ -1,10 +1,13 @@
 //صفحة البلاغات
 import React from "react"   
 import "../styles/ReportsPages.css"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
+
 export default function ReportsPages({reports = [], deleteReport}){
+  const navigate = useNavigate();
     const totalReports = reports.length;
     const newReports = reports.filter((r) => r.status === "جديد").length;
     const inReviewReports = reports.filter((r) => r.status === "قيد المراجعة").length;
@@ -65,7 +68,7 @@ export default function ReportsPages({reports = [], deleteReport}){
                             <p>
                                 <strong>الحالة:</strong>{r.status}
                             </p>
-                            <Link to={`/reports/${r.id}`} className="view-report-link"> عرض التفاصيل</Link>
+                            <button onClick={() => navigate (`/report/${r.id}`)} className="view-report-link"> عرض التفاصيل</button>
                             <button className="btn-delete"onClick={() => deleteReport(r.id)}>حذف</button>
                         </div>
                         </div>

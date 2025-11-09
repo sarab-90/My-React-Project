@@ -1,103 +1,128 @@
 /* الحاوية الرئيسية */
 .Voting {
+    direction: rtl;
     max-width: 1200px;
-    margin: 20px auto;
-    padding: 10px 20px;
+    margin: 40px auto;
+    padding: 0 20px;
     font-family: 'Tajawal', sans-serif;
     color: #333;
 }
-
-.Voting h2 {
+.Voting h3 {
+    margin-top: 30px;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom:5px ;
+    font-size: 1.5rem;
     color: #2c3e50;
 }
-
-/* الصفوف والأعمدة */
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+.voting-card{
+    background: #fdfdfd;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    width: 50%;
+    /* display: inline-block; */
+    /* flex-direction: column; */
+    transition: transform 0.2s , box-shadow 0.2s;
+    position: relative;
+}
+.voting-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+.voting-card h4 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #222;
 }
 
-.col {
-    flex: 1 1 300px;
-    max-width: 350px;
+.voting-card p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0 10px 0;
 }
 
-/* بطاقة البلاغ/الاقتراح */
-.report-card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+.vote-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.report-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+.vote-buttons button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
 }
 
-/* صورة العنصر */
-.report-media {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+.vote-buttons button:hover {
+  background-color: #e0e0e0;
 }
 
-/* حالة عدم وجود صورة */
-.no-media {
-    width: 100%;
-    height: 200px;
-    background-color: #f1f1f1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #999;
-    font-size: 16px;
+.vote-buttons button:active {
+  transform: scale(0.95);
 }
 
-/* محتوى البطاقة */
-.card-body {
-    padding: 15px;
+.badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: white;
+  background-color: #007bff;
+  border-radius: 12px;
+}
+.voting-card h4 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #222;
 }
 
-.report-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #34495e;
+.voting-card p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0 10px 0;
 }
 
-.report-description {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 15px;
+.vote-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-/* الأصوات */
-.card-body p strong {
-    color: #2980b9;
+.vote-buttons button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
 }
 
-/* زر التصويت */
-.vote-btn {
-    background-color: #27ae60;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
+.vote-buttons button:hover {
+  background-color: #e0e0e0;
 }
 
-.vote-btn:hover {
-    background-color: #2ecc71;
+.vote-buttons button:active {
+  transform: scale(0.95);
 }
 
+.badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: white;
+  background-color: #007bff;
+  border-radius: 12px;
+}
 /* متجاوب */
 @media screen and (max-width: 768px) {
     .col {

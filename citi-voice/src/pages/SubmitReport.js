@@ -47,11 +47,6 @@ export default  function SubmitReport({addReport, user}){
             alert("الرجاء إدخال جميع البيانات المطلوبة");
             return;
         }   
-        // تحقق من رقم وطني او هاتف حسب نوع مستخدم
-        // if (user?.type === "مبلغ" && !nationalID){
-        //     alert("يرجى إدخال الرقم الوطني.");
-        //     return;
-        // }
         if (user?.type === "مقترح" && !phone){
             alert("يرجى إدخال رقم الهاتف");
             return;
@@ -65,7 +60,7 @@ export default  function SubmitReport({addReport, user}){
             description,
             location,
             media,
-            user,
+            user: user,
             nationalID: user?.type === "مبلغ" ? nationalID: "",
             phone:user?.type === "مقترح" ? phone: user?.phone || "",
             status: "جديد",

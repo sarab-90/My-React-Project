@@ -96,7 +96,7 @@ export default function UserType({user,setUser}) {
                             required
                         />
                     </div>
-                )};
+                )}
 
                 <div>
                     <label>البريد الإلكتروني</label>
