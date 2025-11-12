@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/footer.css';
-import { Link } from 'react-router-dom';
-import {FaFacebook, FaLinkedinIn, FaYoutube, FaInstagram} from 'react-icons/fa';
+import { FaLinkedinIn} from 'react-icons/fa';
 
 export default function Footer() {
     return (
@@ -9,16 +8,13 @@ export default function Footer() {
             <div className='footer-top'></div>
             <div className='footer-logo'>
                 <h2>صوتي مسموع</h2>
-                <p>منصتك لتوصيل البلاغات والمقترحات للبلدية بكل سهولة وشفافية</p>
+                <p>وصل بلاغك – أُرسم مدينتك – بشفافية مطلقة</p>
             </div>
 
             <div className='footer-social'>
-                <h3>تابعنا على</h3>
                 <div className='social-icons'>
-                    <a href='#' ><FaFacebook/></a>
-                    <a href='#' ><FaLinkedinIn/></a>
-                    <a href='#' ><FaYoutube/></a>
-                    <a href='#' ><FaInstagram/></a>
+                    <h3>تابعنا على</h3>
+                    <a href='https://www.linkedin.com/feed/'target='_blank' ><FaLinkedinIn/></a>
                 </div>
             </div>
 

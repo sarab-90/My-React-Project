@@ -4,7 +4,6 @@ import '../styles/Suggestions.css';
 export default function Suggestions({addSuggestion, suggestions = [], updateRating}){
     const [text, setText] = useState("");
     const [user, setuser] = useState("sarab")
-    console.log("suggestions:", suggestions)
 
     const handleSubmit = (e) => {
         e.preventDefault();

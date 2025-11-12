@@ -1,59 +1,116 @@
-.UserType{
-    direction: rtl;
-    font-family: 'Tajawal', sans-serif;
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 40px 20px;
-    background-color: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-
+:root {
+--color-primary: #009688;
+--color-text: #333;
+--color-bg-light: #f9f9f9;
+--radius: 12px;
+--font-main: 'Tajawal', sans-serif;
+--form-max-width: 500px;
+--spacing-lg: 40px;
+--spacing-md: 20px;
+--spacing-sm: 15px;
+--error-color: #d32f2f;
+--hint-color: #666;
 }
-.UserType h2{
-    text-align: center;
-    font-size: 2.4rem;
-    color: #1e88e5;
-    margin-bottom: 30px;
+.UserType {
+  direction: rtl;
+  font-family: var(--font-main);
+  width: 100%;
+  max-width: var(--form-max-width);
+  margin: 50px auto;
+  padding: var(--spacing-lg) var(--spacing-sm);
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
-
-.UserType form{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.UserType h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
 }
-.UserType form div{
-    display: flex;
-    flex-direction: column;
+.UserType .user-type-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
-.UserType label{
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 8px;
+.UserType .user-type-form div {
+  display: flex;
+  flex-direction: column;
+}
+.UserType label {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+.UserType .hint {
+  font-size: 0.85rem;
+  color: var(--hint-color);
+  margin-top: 4px;
 }
 .UserType input[type='text'],
 .UserType input[type='email'],
-.UserType select{
-    width: 100%;
-    padding: 12px 15px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    box-sizing: border-box;
+.UserType select {
+  width: 100%;
+  padding: 12px var(--spacing-sm);
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
-.UserType button{
-    padding: 14px;
-    font-size: 1.1rem;
-    color: #232020;
+.UserType input:focus,
+.UserType select:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
 }
+.UserType .error {
+  font-size: 0.9rem;
+  color: var(--error-color);
+  margin-top: 4px;
+}
+.UserType button {
+  padding: 14px;
+  font-size: 1.1rem;
+  color: #fff;
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.UserType button:hover {
+  background-color: #1565c0;
+}
+.UserType button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+/* Responsive */
 @media (max-width: 768px) {
   .UserType {
-    padding: 30px 15px;
+    padding: 30px var(--spacing-sm);
   }
   .UserType h2 {
     font-size: 2rem;
   }
-  .user-type-form button {
+  .UserType button {
     font-size: 1rem;
   }
 }
+@media (max-width: 480px) {
+  .UserType {
+    margin: 20px auto;
+    padding: 20px 10px;
+  }
+  .UserType h2 {
+    font-size: 1.8rem;
+  }
+  .UserType button {
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+

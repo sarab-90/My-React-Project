@@ -6,55 +6,97 @@ import '../styles/UserType.css'
  
 
 export default function UserType({user,setUser}) {
-    const [userType, setUserType] = useState("");
-    const [name, setName] = useState("");
-    const [nationalID, setnationalID] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
+    const [formData, setFormData] = useState({
+        userType:"",
+        name:"",
+        nationalID:"",
+        contactInfo:"",
+        email:"",
+        phone:""
+    });
 
     const navigate = useNavigate();
+    const [errors, setErrors] = useState({});
 
-    console.log('setuser is:', setUser)
-    console.log('typ set:', typeof setUser);
+    const handleChange =({target:{name, value}}) => {
+        setFormData(prev => ({...prev,[name]: value}));
+        // تنظيف الاخطاء 
+        setErrors(prev => ({...prev, [name]: undefined}))
+    };
+
+    const validate =() => {
+        const newErrors = {};
+        if (!formData.userType) {
+            newErrors.userType = "حدد دورك";
+        }
+        if (!formData.name.trim()) {
+            newErrors.name = "الاسم الكامل مطلوب";
+        }else if(formData.name.trim().length < 2){
+            newErrors.name = "الاسم يجب أن يكون على الأقل حرفين"
+        }
+        if (formData.userType === "مبلغ"){
+            if(!formData.nationalID.trim()){
+                newErrors.nationalID = "الرقم الوطني مطلوب للمبلغ";
+            } else if(!/^[0-9]+$/.test(formData.nationalID.trim())){
+                newErrors.nationalID = "الرقم الوطني يجب أن يكون 10 أرقام";
+            }
+            if (!formData.contactInfo.trim()) {
+                newErrors.contactInfo = "أدخل رقم الهاتف أو البريد الإلكتروني";
+            } else {
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                const phoneRegex = /^07[0-9]{8}$/;
+                if (!emailRegex.test(formData.contactInfo.trim()) && !phoneRegex.test(formData.contactInfo.trim())) {
+                newErrors.contactInfo = "أدخل رقم هاتف يبدأ بـ 07 أو بريد إلكتروني صالح";
+                }
+            }
+        }
+        if (formData.userType === "مقترح") { 
+            if (!formData.email.trim() && !formData.phone.trim()){
+                newErrors.email = "أدخل البريد أو رقم الهاتف";
+            }
+            if (formData.email.trim()){
+                const emailRegex =/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailRegex.test(formData.email.trim())){
+                    newErrors.email = "صيغة البريد الإلكتروني غير صحيحية";
+                }
+            }
+            if (formData.phone.trim()){
+                const phoneRegex = /^07[0-9]{8}$/;
+                if(!phoneRegex.test(formData.phone.trim())){
+                    newErrors.phone = "رقم الهاتف يجب أن يبدأ ب07 ويتكون من 10 أرقام"
+                }
+            }
+        }
+        return newErrors;
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if(!userType || !name){
-            alert("الرجاء إدخال الاسم وتحديد الدور");
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length > 0 ){
+            setErrors(validationErrors);
             return;
         }
-        if (userType === "مبلغ" && !nationalID){
-            alert("الرجاء إدخال الرقم الوطني للمبلغ.")
-            return;
-        }
-        if (!email && !phone){
-            alert("يجب إدخال البريد الإلكتروني أو رقم الهاتف على الأقل.")
-            return;
-        }
-
+        
         const UserData = {
-            type: userType,
-            name,
-            nationalID:userType ==="مبلغ" ? nationalID : "" ,
-            email,
-            phone
+            type: formData.userType,
+            name:formData.name.trim(),
+            nationalID:formData.userType ==="مبلغ" ? formData.nationalID : "" ,
+            contactInfo: formData.userType === "مبلغ" ? formData.contactInfo.trim() : "",
+            email:formData.userType === "مقترح" ? formData.email.trim() : "",
+            phone:formData.userType ==="مقترح" ? formData.phone.trim() : ""
         };
 
-        // لربطه بالبلاغ لاحقا يحفظ في 
         localStorage.setItem("user", JSON.stringify(UserData));
-        console.log("typeof setUser:", typeof setUser)
         setUser(UserData);
 
-        if(userType ==="مبلغ"){ 
-            navigate("/SubmitReport")
-        }
-        else if ( userType ==="مقترح"){
-             navigate("/suggestions");
-        }
-        else{
-             navigate("/Home");
-        }
+        const routeMap = {
+            "مبلغ": "/SubmitReport",
+            "مقترح": "/suggestions",
+            "زائر": "/voting"
+        };
+        const nextRoute = routeMap[UserData.type] || "/Home";
+        navigate(nextRoute);
     };
 
     return(
@@ -63,66 +105,99 @@ export default function UserType({user,setUser}) {
 
             <form onSubmit={handleSubmit} className="user-type-form">
                 <div>
-                    <label>الدور</label>
+                    <label htmlFor="UserType">الدور</label>
                     <select
-                        value={userType}
-                        onChange={(e) => setUserType(e.target.value)}
-                        required
+                        id="userType"
+                        name="userType"
+                        value={formData.userType}
+                        onChange={handleChange}
                     >
                         <option value="">اختر دورك</option>
                         <option value="مبلغ">مبلغ</option>
                         <option value="مقترح">مقترح</option>
                         <option value="زائر">زائر</option>
                     </select>
+                    {errors.userType && <span className="error">{errors.userType}</span>}
                 </div>
+
                 <div>
-                    <label>الاسم الكامل</label>
+                    <label htmlFor="name">الاسم الكامل</label>
                     <input
+                        id="name"
+                        name="name"
                         type="text"
                         placeholder="الاسم الكامل"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
+                        value={formData.name}
+                        onChange={handleChange}
                     />
+                    {errors.name && <span className="error">{errors.name}</span>}
                 </div>
-                {userType === "مبلغ" && (
+
+                {formData.userType === "مبلغ" && (
+                    <>
                     <div>
-                        <label>الرقم الوطني</label>
+                        <label htmlFor="nationalID">الرقم الوطني</label>
                         <input
+                            id="nationalID"
+                            name="nationalID"
                             type="text"
                             placeholder=" أدخل الرقم الوطني"
-                            value={nationalID}
-                            onChange={(e) => setnationalID(e.target.value)}
-                            required
+                            value={formData.nationalID}
+                            onChange={handleChange}
+                            
                         />
+                        {errors.nationalID && <span className="error">{errors.nationalID}</span>}              
                     </div>
+                    <div>
+                        <label htmlFor="contactInfo"> رقم الهاتف / البريد الإلكتروني</label>
+                        <input
+                            id="contactInfo"
+                            name="contactInfo"
+                            type="text"
+                            placeholder=" أدخل رقم الهاتف / البريد الإلكتروني "
+                            value={formData.contactInfo}
+                            onChange={handleChange}
+                        />
+                        {errors.contactInfo && <span className="error">{errors.contactInfo}</span>}
+                    </div>
+                    </>
                 )}
+                {formData.userType === "مقترح" && (
+                    <>
+                    <div>
+                        <label htmlFor="email">البريد الإلكتروني</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="example@email.com"
+                            value={formData.email}   
+                            onChange={handleChange}
+                        />
+                        <small className="hint">اختياري، يمكنك إدخاله لتلقي التحديثات</small>
+                        {errors.email && <span className="error">{errors.email}</span>}
 
-                <div>
-                    <label>البريد الإلكتروني</label>
-                    <input
-                        type="email"
-                        placeholder="example@email.com"
-                        value={email}   
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
+                    </div>
 
-                <div>
-                    <label>رقم الهاتف</label>
-                    <input
-                        type="text"
-                        placeholder="07xxxxxxxx"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                    />
-                </div>
-                
-
+                    <div>
+                        <label htmlFor="phone">رقم الهاتف</label>
+                        <input
+                            id="phone"
+                            name="phone"
+                            type="text"
+                            placeholder="07xxxxxxxx"
+                            value={formData.phone}
+                            onChange={handleChange}
+                        />
+                        <small className="hint">اختياري، أو يمكنك إدخال بريد إلكتروني</small>                    
+                        {errors.phone && <span className="error">{errors.phone}</span>}
+                    </div>
+                    </>
+                )}
                 <button type='submit'>متابعة</button>
             </form>
         </div>
-    )
+    );
 }
 
 

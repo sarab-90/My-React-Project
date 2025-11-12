@@ -1,5 +1,5 @@
 //صفحة انشاء بلاغ 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/SubmitReport.css";
 import {  useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -10,14 +10,23 @@ export default  function SubmitReport({addReport, user}){
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
     const [media, setMedia] = useState(null);
-    const [nationalID, setnationalID] = useState("");
-    const [phone, setPhone] = useState("");
+
     //احداثيات الموقع
     const [latitude,setlatitude] = useState(null);
     const [longitude, setlongitude] = useState(null);
 
+    //اظهار الاخطاء
+    const [errors, setErrors] = useState({});
+
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (!user || user.type !== "مبلغ"){
+            alert("يجب تسجيل الدخول كمبلغ أولاً!");
+            navigate("/UserType");
+        } 
+    },[ user, navigate]);
+    
     // زر تحديد الموقع
     const handelGetlocation = () =>{
         if (!navigator.geolocation){
@@ -25,10 +34,9 @@ export default  function SubmitReport({addReport, user}){
             return;
         }
         navigator.geolocation.getCurrentPosition(
-            (position) => {
+            position => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude
-
                 setlatitude(lat);
                 setlongitude(lon);
                 setLocation(` الموقع المحدد: ${lat.toFixed(6)}, ${lon.toFixed(6)}`);               
@@ -41,14 +49,22 @@ export default  function SubmitReport({addReport, user}){
             )
     };
 
+    const  validate = () => {
+        const newErrors = {};
+        if (!title.trim()) newErrors.title = "العنوان مطلوب";
+        if (!type) newErrors.type = "نوع البلاغ مطلوب";
+        if (!description.trim()) newErrors.description = "الوصف مطلوب";
+        if (!location.trim()) newErrors.location = "الموقع مطلوب";
+        if (user?.type === "مبلغ" && !user.nationalID) {
+            newErrors.nationalID = "الرقم الوطني مطلوب";
+        }
+        return newErrors; 
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!title || !type || !description || !location){
-            alert("الرجاء إدخال جميع البيانات المطلوبة");
-            return;
-        }   
-        if (user?.type === "مقترح" && !phone){
-            alert("يرجى إدخال رقم الهاتف");
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length > 0){
+            setErrors(validationErrors);
             return;
         }
 
@@ -60,15 +76,18 @@ export default  function SubmitReport({addReport, user}){
             description,
             location,
             media,
-            user: user,
-            nationalID: user?.type === "مبلغ" ? nationalID: "",
-            phone:user?.type === "مقترح" ? phone: user?.phone || "",
+            user: {
+                name:user.name,
+                nationalID:user.nationalID,
+                type:user.type
+            },
             status: "جديد",
             date: new Date().toLocaleString(),
-            votes: 0,
+            votesup: 0,
+            votesDown:0
         };
         if (typeof addReport === "function") addReport(newReport);
-        alert("تم إرسال البلاغ/الاقتراح بنجاح!");
+        alert("تم إرسال البلاغ بنجاح!");
         // العودة الى صفحة البلاغات 
         navigate("/ReportsPages");
     };
@@ -85,33 +104,10 @@ export default  function SubmitReport({addReport, user}){
     return(
         <div className="SubmitReport">
             <h2>إرسال بلاغ  </h2>
+            {user && (
+                <p>المبلغ : {user.name}</p>
+            )}
             <form onSubmit={handleSubmit} className="submit-report-form">
-                {user?.type === "مبلغ" && (
-                    <div>
-                        {/* <label>الرقم الوطني</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="الرقم الوطني"
-                            value={nationalID}
-                            onChange={(e) => setnationalID(e.target.value)}
-                            required
-                        /> */}
-                    </div>
-                )}
-                {user?.type === "مقترح" && (
-                    <div>
-                        <label>رقم الهاتف</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="رقم الهاتف"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            required
-                        />
-                    </div>
-                )}
                 <div>
                     <label>عنوان البلاغ  </label>
                     <input
@@ -120,19 +116,22 @@ export default  function SubmitReport({addReport, user}){
                         placeholder="عنوان البلاغ ... "
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        required
                     />
+                    {errors.title && <span className="error">{errors.title}</span>}
                 </div>
                 <div>
                     <label>نوع البلاغ</label>
                     <select
-                        value={type} onChange={(e) => setType(e.target.value)} required>
+                        value={type} onChange={(e) => setType(e.target.value)} className="form-control">
                         <option value="">اختر نوع البلاغ</option>
-                        <option value="خدمة عامة">خدمة عامة</option>
                         <option value="بنية تحتية">بنية تحتية</option>
-                        <option value="نظافة">نظافة</option>
-                        <option value="أخرى">أخرى</option>
+                        <option value="نظافة">نظافة </option>
+                        <option value="الصحة العامة">الصحة العامة</option>
+                        <option value="الصيانة والإنشاءات "> الصيانة والإنشاءات</option>
+                        <option value="التراخيص التجارية">التراخيص التجارية</option>
+                        <option value="خدمات أخرى">خدمات أخرى</option>
                     </select>
+                    {errors.type && <span className="error">{errors.type}</span>}
                 </div>
 
                 <div>
@@ -141,8 +140,8 @@ export default  function SubmitReport({addReport, user}){
                     placeholder="وصف بلاغ .... "
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    required
                     />
+                    {errors.description && <span className="error">{errors.description}</span>}
                 </div>
 
                 <div>
@@ -153,8 +152,9 @@ export default  function SubmitReport({addReport, user}){
                         placeholder="اكتب الموقع يدوياً أو استخدم زر تحديد الموقع"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        required
                     />
+                    {errors.location && <span className="error">{errors.location}</span>}
+                   
                 </div>
 
                 <button type="button" className="btn-location" onClick={handelGetlocation}>
@@ -167,7 +167,6 @@ export default  function SubmitReport({addReport, user}){
                     </div>
                 )}
 
-                
                 <div>
                     <label className="label=img">إرفاق صورة أو فيديو</label>
                     <input
@@ -184,4 +183,5 @@ export default  function SubmitReport({addReport, user}){
         </div>
     )
 }
+
 

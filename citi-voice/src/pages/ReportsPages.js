@@ -12,6 +12,16 @@ export default function ReportsPages({reports = [], deleteReport}){
     const newReports = reports.filter((r) => r.status === "جديد").length;
     const inReviewReports = reports.filter((r) => r.status === "قيد المراجعة").length;
     const completedReports = reports.filter((r) => r.status === "منفذ").length;
+
+    const handleCreateReport = () => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (!storedUser || storedUser.type !== "مبلغ") {
+        alert("يجب تسجيل الدخول كمبلغ أولاً!");
+        navigate("/UserType");
+      } else {
+        navigate("/SubmitReport");
+        }
+    };
     return(
         <div className="container">
         <div className="row text-center mb-4">
@@ -49,31 +59,35 @@ export default function ReportsPages({reports = [], deleteReport}){
           </div>
         </div>
     </div>
-        <div className="ReportsPages">
-        {reports.length === 0 ? (
-            <p className="no-reports">لا توجد بلاغات حتى الآن .</p>
-        ) : (
-            <div className="reports-grid">
-                {reports.map((r)=>(
-                    <div className="report-card" key={r.id}>
-                        {r.media &&(
-                            <img 
-                            src={r.media} 
-                            alt="Report Media" 
-                            className="report-media"/>
-                            )}
-                        <div className="card-body">
-                            <h5 className="card-title">{r.title}</h5>
-                            <p className="card-text">{r.description}</p>
-                            <p>
-                                <strong>الحالة:</strong>{r.status}
-                            </p>
-                            <button onClick={() => navigate (`/report/${r.id}`)} className="view-report-link"> عرض التفاصيل</button>
-                            <button className="btn-delete"onClick={() => deleteReport(r.id)}>حذف</button>
-                        </div>
-                        </div>
-        ))}
-        </div>
+
+    <div className="mb-4 text-center">
+      <button className="btn btn-primary" onClick={handleCreateReport}>إنشاء بلاغ جديد</button>
+    </div>
+    <div className="ReportsPages">
+    {reports.length === 0 ? (
+        <p className="no-reports">لا توجد بلاغات حتى الآن .</p>
+    ) : (
+        <div className="reports-grid">
+            {reports.map((r)=>(
+                <div className="report-card" key={r.id}>
+                    {r.media &&(
+                        <img 
+                        src={r.media} 
+                        alt="Report Media" 
+                        className="report-media"/>
+                        )}
+                    <div className="card-body">
+                        <h5 className="card-title">{r.title}</h5>
+                        <p className="card-text">{r.description}</p>
+                        <p>
+                            <strong>الحالة:</strong>{r.status}
+                        </p>
+                        <button onClick={() => navigate (`/report/${r.id}`)} className="view-report-link"> عرض التفاصيل</button>
+                        <button className="btn-delete"onClick={() => deleteReport(r.id)}>حذف</button>
+                    </div>
+                    </div>
+    ))}
+    </div>
         )}
     </div>
     </div>

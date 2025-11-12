@@ -44,7 +44,6 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    /* transition: background 0.3s; */
 }
 .suggestion-form button:hover{
     background: #5750d6;
